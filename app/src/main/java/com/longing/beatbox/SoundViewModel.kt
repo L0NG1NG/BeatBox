@@ -2,6 +2,8 @@ package com.longing.beatbox
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 
 class SoundViewModel(private val beatBox: BeatBox) : BaseObservable() {
@@ -20,6 +22,7 @@ class SoundViewModel(private val beatBox: BeatBox) : BaseObservable() {
     @get:Bindable
     val title: String?
         get() = sound?.name
+
 }
 
 
