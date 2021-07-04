@@ -10,22 +10,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.longing.beatbox.databinding.ActivityMainBinding
 import com.longing.beatbox.databinding.ListItemSoundBinding
-import java.security.acl.Owner
-import kotlin.reflect.KProperty
 
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var soundAdapter: SoundAdapter
     private val beatBoxViewModel: BeatBoxViewModel by lazy {
-        ViewModelProvider(this).get(BeatBoxViewModel::class.java)
+        ViewModelProvider(this, BeatBoxViewModelFactory(assets))
+            .get(BeatBoxViewModel::class.java)
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        beatBoxViewModel.initializeBeatBox(assets)
-        soundAdapter = SoundAdapter(beatBoxViewModel.beatBox!!.sounds)
+        soundAdapter = SoundAdapter(beatBoxViewModel.beatBox.sounds)
 
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 binding.playbackSpeedLabel.text =
                     resources.getString(R.string.play_speed_rate_label, progress)
-                beatBoxViewModel.beatBox!!.rate = progress.toFloat() / 100 + 1f
+                beatBoxViewModel.beatBox.rate = progress.toFloat() / 100 + 1f
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -63,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.viewModel = SoundViewModel(beatBoxViewModel.beatBox!!)
+            binding.viewModel = SoundViewModel(beatBoxViewModel.beatBox)
 
         }
 
