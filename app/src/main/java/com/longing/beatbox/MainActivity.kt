@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 3)
-            addItemDecoration(
-                GridSpacingDecoration(resources.getDimensionPixelSize(R.dimen.grid_spacing))
-            )
             adapter = SoundAdapter(beatBox.sounds)
         }
     }
